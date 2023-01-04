@@ -17,19 +17,19 @@ class App extends Component {
     searchText: "",
   };
 
-  componentDidMount() {
-    const stringifiedNotes = localStorage.getItem("stringifiedNotes");
-    if (stringifiedNotes) {
-      const savedNotes = JSON.parse(stringifiedNotes);
-      this.setState({ notes: savedNotes });
-    }
-  }
+  // componentDidMount() {
+  //   const stringifiedNotes = localStorage.getItem("stringifiedNotes");
+  //   if (stringifiedNotes) {
+  //     const savedNotes = JSON.parse(stringifiedNotes);
+  //     this.setState({ notes: savedNotes });
+  //   }
+  // }
 
-  componentDidUpdate() {
-    const stringifiedNotes = JSON.stringify(this.state.notes);
-    console.log(stringifiedNotes);
-    localStorage.setItem("stringifiedNotes", stringifiedNotes);
-  }
+  // componentDidUpdate() {
+  //   const stringifiedNotes = JSON.stringify(this.state.notes);
+  //   console.log(stringifiedNotes);
+  //   localStorage.setItem("stringifiedNotes", stringifiedNotes);
+  // }
 
   addNote = () => {
     const randomIndex = Math.floor(Math.random() * notesColors.length);
