@@ -48,7 +48,7 @@ class App extends Component {
   };
 
   removeNote = (clickedId) => {
-    const filterCallback = (note, id) => note.id !== clickedId;
+    const filterCallback = (note) => note.id !== clickedId;
     const newNotes = this.state.notes.filter(filterCallback);
     this.setState({ notes: newNotes });
   };
