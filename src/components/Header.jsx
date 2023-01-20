@@ -1,8 +1,9 @@
 import React from "react";
 
 export default function Header(props) {
-  const callSearch = (e) => {
-    props.onSearch(e.target.value);
+  const callSearch = (event) => {
+    const { value } = event.target;
+    props.onSearch(value);
   };
 
   return (

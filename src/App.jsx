@@ -74,7 +74,9 @@ export default function App() {
       });
     });
 
-    setSearchText(newSearchText);
+    setSearchText((prevSearchText) => {
+      prevSearchText = newSearchText;
+    });
 
     // const newSearchText = text.toLowerCase();
 

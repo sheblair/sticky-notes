@@ -4,6 +4,7 @@ import Note from "./Note";
 export default function NotesList(props) {
   const filterCallback = (note) => note.doesMatchSearch;
   const filteredNotes = props.notes.filter(filterCallback);
+  console.log(Array.isArray(props.notes));
   const renderNote = (note) => (
     <Note
       key={note.id}
