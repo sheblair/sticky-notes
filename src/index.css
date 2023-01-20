@@ -7,6 +7,7 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Helvetica', sans-serif;
 }
 
 input,
@@ -69,11 +70,11 @@ textarea {
 
 .note__title,
 .note__description {
-  font-family: 'Helvetica', sans-serif;
   width: 100%;
   padding: 8px 14px;
   background: transparent;
   border: none;
+  font-family: 'Helvetica', sans-serif;
 }
 
 .note__title {
@@ -94,7 +95,6 @@ textarea {
   font-size: 20px;
   color: lightgrey;
   padding: 5px;
-  font-family: "Courier New", Courier, monospace;
 }
 
 .note__delete:hover {

@@ -1,22 +1,22 @@
 import React from "react";
 
-const Note = (props) => {
-  const updateTitle = (event) => {
+export default function Note(props) {
+  function updateTitle(event) {
     const updatedValue = event.target.value;
     const changedNoteId = props.note.id;
     props.onType(changedNoteId, "title", updatedValue);
-  };
+  }
 
-  const updateDescription = (event) => {
+  function updateBody(event) {
     const updatedValue = event.target.value;
     const changedNoteId = props.note.id;
-    props.onType(changedNoteId, "description", updatedValue);
-  };
+    props.onType(changedNoteId, "body", updatedValue);
+  }
 
-  const handleClick = (e) => {
+  function handleClick(e) {
     e.preventDefault();
     props.removeNote(props.note.id);
-  };
+  }
 
   return (
     <li
@@ -33,14 +33,12 @@ const Note = (props) => {
       <textarea
         className="note__description"
         placeholder="Description..."
-        value={props.note.description}
-        onChange={updateDescription}
+        value={props.note.body}
+        onChange={updateBody}
       />
       <span className="note__delete" onClick={handleClick}>
         x
       </span>
     </li>
   );
-};
-
-export default Note;
+}
