@@ -1,6 +1,6 @@
 import React from "react";
 
-const Header = (props) => {
+export default function Header(props) {
   const callSearch = (e) => {
     props.onSearch(e.target.value);
   };
@@ -22,6 +22,4 @@ const Header = (props) => {
       </aside>
     </header>
   );
-};
-
-export default Header;
+}
