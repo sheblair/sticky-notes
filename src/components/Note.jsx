@@ -1,6 +1,6 @@
 import React from "react";
 
-const Note = (props) => {
+export default function Note(props) {
   const updateTitle = (event) => {
     const updatedValue = event.target.value;
     const changedNoteId = props.note.id;
@@ -13,10 +13,10 @@ const Note = (props) => {
     props.onType(changedNoteId, "description", updatedValue);
   };
 
-  const handleClick = (e) => {
-    e.preventDefault();
+  function handleClick(event) {
+    event.preventDefault();
     props.removeNote(props.note.id);
-  };
+  }
 
   return (
     <li
@@ -36,11 +36,10 @@ const Note = (props) => {
         value={props.note.description}
         onChange={updateDescription}
       />
-      <span className="note__delete" onClick={handleClick}>
-        x
-      </span>
+      <i
+        className="fa-solid fa-trash-can note__delete"
+        onClick={handleClick}
+      ></i>
     </li>
   );
-};
-
-export default Note;
+}

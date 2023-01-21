@@ -25,7 +25,8 @@ textarea {
 
 .app-header__title {
   margin: 10px 20px 0px;
-  font-family: Arial, sans-serif;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
 }
 
 .app-header__controls {
@@ -51,8 +52,9 @@ textarea {
   cursor: pointer;
   padding: 8px;
   font-weight: bolder;
-  background-color: #eee;
-  outline: none;
+  background-color: #f2eeee;
+  outline: 1px solid black;
+  border: none;
 }
 
 .note {
@@ -90,9 +92,9 @@ textarea {
 
 .note__delete {
   position: absolute;
-  top: 0px;
-  right: 0px;
-  font-size: 20px;
+  top: 5px;
+  right: 5px;
+  font-size: 15px;
   color: lightgrey;
   padding: 5px;
 }
