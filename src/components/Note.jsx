@@ -13,8 +13,8 @@ export default function Note(props) {
     props.onType(changedNoteId, "body", updatedValue);
   }
 
-  function handleClick(e) {
-    e.preventDefault();
+  function handleClick(event) {
+    event.preventDefault();
     props.removeNote(props.note.id);
   }
 
@@ -36,9 +36,10 @@ export default function Note(props) {
         value={props.note.body}
         onChange={updateBody}
       />
-      <span className="note__delete" onClick={handleClick}>
-        x
-      </span>
+      <i
+        className="fa-solid fa-trash-can note__delete"
+        onClick={handleClick}
+      ></i>
     </li>
   );
 }

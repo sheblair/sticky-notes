@@ -1,24 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 import notesColors from "./notesColors";
 
 export default function App() {
-  const [notes, setNotes] = useState([
-    {
-      id: Date.now(),
-      title: "",
-      body: "",
-      doesMatchSearch: true,
-      backgroundColor: "LemonChiffon",
-    },
-  ]);
+  const [notes, setNotes] = useState(
+    JSON.parse(localStorage.getItem("notes")) || []
+  );
 
   const [searchText, setSearchText] = useState("");
 
-  // useEffect(() => {
-  //   localStorage.setItem("notes", JSON.stringify(notes));
-  // }, [notes]);
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   function addNote() {
     const randomIndex = Math.floor(Math.random() * notesColors.length);

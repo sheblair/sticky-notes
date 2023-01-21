@@ -2,13 +2,12 @@ import React from "react";
 
 export default function Header(props) {
   const callSearch = (event) => {
-    const { value } = event.target;
-    props.onSearch(value);
+    props.onSearch(event.target.value);
   };
 
   return (
     <header className="app-header__controls">
-      <h1 className="app-header__title">Super Sticky Notes</h1>
+      <h1 className="app-header__title">Sticky Notes</h1>
       <aside>
         <button onClick={props.addNote} className="add-new">
           + New Note

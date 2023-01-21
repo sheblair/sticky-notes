@@ -2,8 +2,8 @@ import React from "react";
 import Note from "./Note";
 
 export default function NotesList(props) {
-  const filterCallback = (note) => note.doesMatchSearch;
-  const filteredNotes = props.notes.filter(filterCallback);
+  const filteredNotes = props.notes.filter((note) => note.doesMatchSearch);
+
   const renderNote = (note) => (
     <Note
       key={note.id}
