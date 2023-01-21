@@ -1,13 +1,13 @@
 import React from "react";
 
-const Header = (props) => {
-  const callSearch = (e) => {
-    props.onSearch(e.target.value);
+export default function Header(props) {
+  const callSearch = (event) => {
+    props.onSearch(event.target.value);
   };
 
   return (
     <header className="app-header__controls">
-      <h1 className="app-header__title">Super Sticky Notes</h1>
+      <h1 className="app-header__title">Sticky Notes</h1>
       <aside>
         <button onClick={props.addNote} className="add-new">
           + New Note
@@ -22,6 +22,4 @@ const Header = (props) => {
       </aside>
     </header>
   );
-};
-
-export default Header;
+}
