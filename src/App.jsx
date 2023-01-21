@@ -1,116 +1,80 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 import notesColors from "./notesColors";
 
-class App extends Component {
-  state = {
-    notes: [
-      {
-        id: Date.now(),
-        title: "",
-        description: "",
-        doesMatchSearch: true,
-        backgroundColor: "LemonChiffon",
-      },
-    ],
-    searchText: "",
-  };
+export default function App() {
+  const [notes, setNotes] = useState(
+    JSON.parse(localStorage.getItem("notes")) || []
+  );
 
-  componentDidMount() {
-    const stringifiedNotes = localStorage.getItem("stringifiedNotes");
-    if (stringifiedNotes) {
-      const savedNotes = JSON.parse(stringifiedNotes);
-      this.setState({ notes: savedNotes });
-    }
-  }
+  const [searchText, setSearchText] = useState("");
 
-  componentDidUpdate() {
-    const stringifiedNotes = JSON.stringify(this.state.notes);
-    console.log(stringifiedNotes);
-    localStorage.setItem("stringifiedNotes", stringifiedNotes);
-  }
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
-  addNote = () => {
+  function addNote() {
     const randomIndex = Math.floor(Math.random() * notesColors.length);
     const randomColor = notesColors[randomIndex];
 
-    const note = {
+    const newNote = {
       id: Date.now(),
       title: "",
-      description: "",
+      body: "",
       doesMatchSearch: true,
       backgroundColor: randomColor,
     };
 
-    const newNotes = [note, ...this.state.notes];
-    this.setState({ notes: newNotes });
-  };
+    setNotes((prevNotes) => [newNote, ...prevNotes]);
+  }
 
-  removeNote = (clickedId) => {
-    const filterCallback = (note, id) => note.id !== clickedId;
-    const newNotes = this.state.notes.filter(filterCallback);
-    this.setState({ notes: newNotes });
-  };
+  function removeNote(clickedId) {
+    setNotes((oldNotes) => oldNotes.filter((note) => note.id !== clickedId));
+  }
 
-  onType = (changedNoteId, updatedKey, updatedValue) => {
-    const updatedNotes = this.state.notes.map((note) => {
-      if (note.id !== changedNoteId) {
-        return note;
-      } else {
-        if (updatedKey === "title") {
-          note.title = updatedValue;
+  function onType(changedNoteId, updatedKey, updatedValue) {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => {
+        if (note.id !== changedNoteId) {
           return note;
         } else {
-          note.description = updatedValue;
-          return note;
+          if (updatedKey === "title") {
+            return { ...note, title: updatedValue };
+          } else {
+            return { ...note, body: updatedValue };
+          }
         }
-      }
-    });
-
-    this.setState({ notes: updatedNotes });
-  };
-
-  onSearch = (text) => {
-    const newSearchText = text.toLowerCase();
-
-    const searchedNotes = this.state.notes.map((note) => {
-      if (!newSearchText) {
-        note.doesMatchSearch = true;
-        return note;
-      } else {
-        const title = note.title.toLowerCase();
-        const description = note.description.toLowerCase();
-        const titleMatch = title.includes(newSearchText);
-        const descriptionMatch = description.includes(newSearchText);
-        const hasMatch = titleMatch || descriptionMatch;
-        note.doesMatchSearch = hasMatch;
-        return note;
-      }
-    });
-
-    this.setState({
-      notes: searchedNotes,
-      searchText: newSearchText,
-    });
-  };
-
-  render() {
-    return (
-      <div className="App">
-        <Header
-          onSearch={this.onSearch}
-          addNote={this.addNote}
-          searchText={this.state.searchText}
-        />
-        <NotesList
-          notes={this.state.notes}
-          onType={this.onType}
-          removeNote={this.removeNote}
-        />
-      </div>
+      })
     );
   }
-}
 
-export default App;
+  function onSearch(text) {
+    const newSearchText = text.toLowerCase();
+
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => {
+        if (!newSearchText) {
+          note.doesMatchSearch = true;
+          return note;
+        } else {
+          const title = note.title.toLowerCase();
+          const body = note.body.toLowerCase();
+          const titleMatch = title.includes(newSearchText);
+          const bodyMatch = body.includes(newSearchText);
+          const hasMatch = titleMatch || bodyMatch;
+          note.doesMatchSearch = hasMatch;
+          return note;
+        }
+      })
+    );
+    setSearchText(newSearchText);
+  }
+
+  return (
+    <div className="App">
+      <Header addNote={addNote} onSearch={onSearch} searchText={searchText} />
+      <NotesList notes={notes} onType={onType} removeNote={removeNote} />
+    </div>
+  );
+}
