@@ -13,6 +13,7 @@ export default function App() {
       backgroundColor: "LemonChiffon",
     },
   ]);
+
   const [searchText, setSearchText] = useState("");
 
   // useEffect(() => {
@@ -57,7 +58,7 @@ export default function App() {
   function onSearch(text) {
     const newSearchText = text.toLowerCase();
 
-    setNotes((prevNotes) => {
+    setNotes((prevNotes) =>
       prevNotes.map((note) => {
         if (!newSearchText) {
           note.doesMatchSearch = true;
@@ -71,34 +72,9 @@ export default function App() {
           note.doesMatchSearch = hasMatch;
           return note;
         }
-      });
-    });
-
-    setSearchText((prevSearchText) => {
-      prevSearchText = newSearchText;
-    });
-
-    // const newSearchText = text.toLowerCase();
-
-    // const searchedNotes = notes.map((note) => {
-    //   if (!newSearchText) {
-    //     note.doesMatchSearch = true;
-    //     return note;
-    //   } else {
-    //     const title = note.title.toLowerCase();
-    //     const body = note.body.toLowerCase();
-    //     const titleMatch = title.includes(newSearchText);
-    //     const bodyMatch = body.includes(newSearchText);
-    //     const hasMatch = titleMatch || bodyMatch;
-    //     note.doesMatchSearch = hasMatch;
-    //     return note;
-    //   }
-    // });
-
-    // setNotes({
-    //   notes: searchedNotes,
-    // });
-    // setSearchText({ searchText: newSearchText });
+      })
+    );
+    setSearchText(newSearchText);
   }
 
   return (
