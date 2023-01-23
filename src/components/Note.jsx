@@ -7,16 +7,11 @@ export default function Note(props) {
     props.onType(changedNoteId, "title", updatedValue);
   };
 
-  const updateDescription = (event) => {
+  const updateBody = (event) => {
     const updatedValue = event.target.value;
     const changedNoteId = props.note.id;
-    props.onType(changedNoteId, "description", updatedValue);
+    props.onType(changedNoteId, "body", updatedValue);
   };
-
-  function handleClick(event) {
-    event.preventDefault();
-    props.removeNote(props.note.id);
-  }
 
   return (
     <li
@@ -31,14 +26,14 @@ export default function Note(props) {
         onChange={updateTitle}
       />
       <textarea
-        className="note__description"
-        placeholder="Description..."
-        value={props.note.description}
-        onChange={updateDescription}
+        className="note__body"
+        placeholder="Body..."
+        value={props.note.body}
+        onChange={updateBody}
       />
       <i
         className="fa-solid fa-trash-can note__delete"
-        onClick={handleClick}
+        onClick={() => props.removeNote(props.note.id)}
       ></i>
     </li>
   );
