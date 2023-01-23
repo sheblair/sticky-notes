@@ -71,7 +71,7 @@ textarea {
 }
 
 .note__title,
-.note__description {
+.note__body {
   width: 100%;
   padding: 8px 14px;
   background: transparent;
@@ -85,7 +85,7 @@ textarea {
   border: none;
 }
 
-.note__description {
+.note__body {
   flex-grow: 1;
   font-size: 14px;
 }
