@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import NotesList from "./components/NotesList";
-import notesColors from "./notesColors";
 
 export default function App() {
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("notes")) || []
   );
-
   const [searchText, setSearchText] = useState("");
+  const [notesColors, setNotesColors] = useState([]);
+
+  useEffect(() => {
+    fetch("https://www.thecolorapi.com/scheme?hex=fffacd&mode=analogic")
+      .then((response) => response.json())
+      .then((data) => {
+        setNotesColors(data.colors.map((color) => color.hex.value));
+      });
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
 
   function addNote() {
-    const randomIndex = Math.floor(Math.random() * notesColors.length);
-    const randomColor = notesColors[randomIndex];
-
     const newNote = {
       id: Date.now(),
       title: "",
       body: "",
       doesMatchSearch: true,
-      backgroundColor: randomColor,
+      backgroundColor:
+        notesColors[Math.floor(Math.random() * notesColors.length)],
     };
 
     setNotes((prevNotes) => [newNote, ...prevNotes]);
