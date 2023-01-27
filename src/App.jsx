@@ -14,7 +14,12 @@ export default function App() {
       .then((response) => response.json())
       .then((data) => {
         setNotesColors(data.colors.map((color) => color.hex.value));
-      });
+      })
+      .catch((error) =>
+        alert(
+          "Oops! Unable to load random color generator. All notes will default to light yellow."
+        )
+      );
   }, []);
 
   useEffect(() => {
