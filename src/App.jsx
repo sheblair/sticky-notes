@@ -7,15 +7,43 @@ export default function App() {
     JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
-  const [notesColors, setNotesColors] = useState([]);
+  const [backgroundColors, setBackgroundColors] = useState([]);
+  const [theme, setTheme] = useState("fffacd");
+  const [themeOptions, setThemeOptions] = useState([
+    {
+      id: "pink",
+      text: "pink",
+      hexValue: "ffe4e1",
+    },
+    {
+      id: "green",
+      text: "green",
+      hexValue: "fffacd",
+    },
+  ]);
+
+  // find a way to default to light yellow and then add hex vals
+  function switchTheme(clickedOptionHexVal) {
+    setTheme(clickedOptionHexVal);
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => ({
+        ...note,
+        backgroundColor:
+          backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
+      }))
+    );
+    console.log(clickedOptionHexVal);
+    console.log(theme);
+  }
 
   useEffect(() => {
-    fetch("https://www.thecolorapi.com/scheme?hex=fffacd&mode=analogic")
+    fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
       .then((response) => response.json())
       .then((data) => {
-        setNotesColors(data.colors.map((color) => color.hex.value));
+        const hexValues = data.colors.map((color) => color.hex.value);
+        setBackgroundColors(hexValues);
       });
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
@@ -28,9 +56,8 @@ export default function App() {
       body: "",
       doesMatchSearch: true,
       backgroundColor:
-        notesColors[Math.floor(Math.random() * notesColors.length)],
+        backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
     };
-
     setNotes((prevNotes) => [newNote, ...prevNotes]);
   }
 
@@ -78,7 +105,13 @@ export default function App() {
 
   return (
     <div className="App">
-      <Header addNote={addNote} onSearch={onSearch} searchText={searchText} />
+      <Header
+        addNote={addNote}
+        onSearch={onSearch}
+        searchText={searchText}
+        switchTheme={switchTheme}
+        themeOptions={themeOptions}
+      />
       <NotesList notes={notes} onType={onType} removeNote={removeNote} />
     </div>
   );
