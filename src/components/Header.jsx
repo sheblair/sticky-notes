@@ -1,4 +1,5 @@
 import React from "react";
+import OptionsList from "./OptionsList";
 
 export default function Header(props) {
   const callSearch = (event) => {
@@ -20,6 +21,10 @@ export default function Header(props) {
           onChange={callSearch}
         />
       </aside>
+      <OptionsList
+        switchTheme={props.switchTheme}
+        themeOptions={props.themeOptions}
+      />
     </header>
   );
 }
