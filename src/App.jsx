@@ -4,11 +4,10 @@ import NotesList from "./components/NotesList";
 
 export default function App() {
   const [notes, setNotes] = useState(
-    JSON.parse(localStorage.getItem("notes")) || []
+    []
+    // JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
-  const [backgroundColors, setBackgroundColors] = useState([]);
-  const [theme, setTheme] = useState("fffacd");
   const [themeOptions, setThemeOptions] = useState([
     {
       id: "pink",
@@ -22,41 +21,71 @@ export default function App() {
     },
   ]);
 
-  // find a way to default to light yellow and then add hex vals
+  // set the default background color to be light yellow
+  // set up options
+  // when user clicks option,
+  // state theme is set at hex value for option
+  // useEffect fetches array of hex values based on option from color API
+  //
+
+  const [theme, setTheme] = useState(null);
+  const [backgroundColors, setBackgroundColors] = useState([]);
+
   function switchTheme(clickedOptionHexVal) {
+    // BLOCKER: how can i make the component re-render at the right time so that i immediately get the new state
+    // when the user clicks the option, and populate it in the background colors of all the notes?
+    // my basic problem is that my state setter function is updating the state for theme after i need it,
+    // at the wrong point in my component life cycle
     setTheme(clickedOptionHexVal);
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => ({
-        ...note,
-        backgroundColor:
-          backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
-      }))
-    );
-    console.log(clickedOptionHexVal);
     console.log(theme);
   }
 
-  useEffect(() => {
-    fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
-      .then((response) => response.json())
-      .then((data) => {
-        const hexValues = data.colors.map((color) => color.hex.value);
-        setBackgroundColors(hexValues);
-      });
-  }, [theme]);
+  // useEffect(() => {
+  //   if (theme) {
+  //     fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         const hexValues = data.colors.map((color) => color.hex.value);
+  //         setBackgroundColors(hexValues);
+  //       });
+  //   }
 
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(notes));
-  }, [notes]);
+  //   setNotes((prevNotes) =>
+  //     prevNotes.map((note) => ({
+  //       ...note,
+  //       backgroundColor:
+  //         backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
+  //     }))
+  //   );
+  //   console.log("useEffect ran");
+  //   console.log(theme);
+  // }, [theme]);
+
+  // when user clicks option:
+  // function switchTheme(clickedOptionHexVal) {
+  //   // theme is set to hex value that was clicked:
+  //   setTheme(clickedOptionHexVal);
+  //   console.log(clickedOptionHexVal);
+  //   // map over notes and replace all old background colors with new background colors
+
+  //   console.log("switchTheme ran");
+  // }
+
+  // save notes to local storage:
+  // useEffect(() => {
+  //   localStorage.setItem("notes", JSON.stringify(notes));
+  // }, [notes]);
 
   function addNote() {
+    const randomColor =
+      backgroundColors[Math.floor(Math.random() * backgroundColors.length)];
+
     const newNote = {
       id: Date.now(),
       title: "",
       body: "",
       doesMatchSearch: true,
-      backgroundColor:
-        backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
+      backgroundColor: theme ? randomColor : "LemonChiffon",
     };
     setNotes((prevNotes) => [newNote, ...prevNotes]);
   }
