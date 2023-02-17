@@ -8,6 +8,8 @@ export default function App() {
     // JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
+  const [theme, setTheme] = useState(null);
+  const [backgroundColors, setBackgroundColors] = useState([]);
   const [themeOptions, setThemeOptions] = useState([
     {
       id: "pink",
@@ -21,55 +23,40 @@ export default function App() {
     },
   ]);
 
-  // set the default background color to be light yellow
-  // set up options
-  // when user clicks option,
-  // state theme is set at hex value for option
-  // useEffect fetches array of hex values based on option from color API
+  // HERE IS THE PROBLEM:
+  // when user clicks "pink", state is already initialized at null and thus there are no colors to use.
+  // state is reset to pink, but that happens after the notes are rendered. that somehow happens at the end
   //
+  // then when user clicks green, state is set to pink and the notes re-render based on this color scheme
+  // the current theme held in state is misaligned with what the user is clicking. state is one step behind user,
+  // so to speak. why though??? and how do i fix ??? arghhh
 
-  const [theme, setTheme] = useState(null);
-  const [backgroundColors, setBackgroundColors] = useState([]);
+  useEffect(() => {
+    if (theme) {
+      fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
+        .then((response) => response.json())
+        .then((data) => {
+          const hexValues = data.colors.map((color) => color.hex.value);
+          setBackgroundColors(hexValues);
+          console.log(backgroundColors);
+        });
+    }
+
+    setNotes((prevNotes) =>
+      prevNotes.map((note) => ({
+        ...note,
+        backgroundColor:
+          backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
+      }))
+    );
+
+    console.log(theme, backgroundColors, "useEffect ran");
+  }, [theme]);
 
   function switchTheme(clickedOptionHexVal) {
-    // BLOCKER: how can i make the component re-render at the right time so that i immediately get the new state
-    // when the user clicks the option, and populate it in the background colors of all the notes?
-    // my basic problem is that my state setter function is updating the state for theme after i need it,
-    // at the wrong point in my component life cycle
     setTheme(clickedOptionHexVal);
-    console.log(theme);
+    //console.log(theme, backgroundColors);
   }
-
-  // useEffect(() => {
-  //   if (theme) {
-  //     fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         const hexValues = data.colors.map((color) => color.hex.value);
-  //         setBackgroundColors(hexValues);
-  //       });
-  //   }
-
-  //   setNotes((prevNotes) =>
-  //     prevNotes.map((note) => ({
-  //       ...note,
-  //       backgroundColor:
-  //         backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
-  //     }))
-  //   );
-  //   console.log("useEffect ran");
-  //   console.log(theme);
-  // }, [theme]);
-
-  // when user clicks option:
-  // function switchTheme(clickedOptionHexVal) {
-  //   // theme is set to hex value that was clicked:
-  //   setTheme(clickedOptionHexVal);
-  //   console.log(clickedOptionHexVal);
-  //   // map over notes and replace all old background colors with new background colors
-
-  //   console.log("switchTheme ran");
-  // }
 
   // save notes to local storage:
   // useEffect(() => {
@@ -85,8 +72,9 @@ export default function App() {
       title: "",
       body: "",
       doesMatchSearch: true,
-      backgroundColor: theme ? randomColor : "LemonChiffon",
+      backgroundColor: theme ? randomColor : "lightyellow",
     };
+    console.log(newNote.backgroundColor);
     setNotes((prevNotes) => [newNote, ...prevNotes]);
   }
 
