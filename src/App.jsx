@@ -4,8 +4,7 @@ import NotesList from "./components/NotesList";
 
 export default function App() {
   const [notes, setNotes] = useState(
-    []
-    // JSON.parse(localStorage.getItem("notes")) || []
+    JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
   const [theme, setTheme] = useState(null);
@@ -31,6 +30,17 @@ export default function App() {
   // the current theme held in state is misaligned with what the user is clicking. state is one step behind user,
   // so to speak. why though??? and how do i fix ??? arghhh
 
+  // from ChatGPT:
+  // The issue seems to be that the state of backgroundColors is not immediately updated when the theme changes,
+  // and as a result, the notes may not render with the correct background color. One possible way to fix this is
+  // to use the useEffect hook to update the background colors when the theme changes, and also to update the notes
+  // with the new background colors.
+
+  // In this updated version, the first useEffect hook fetches the new colors when the theme changes, and the second
+  // useEffect hook updates the notes with the new background colors when the backgroundColors state changes. Note that
+  // we only update the notes when backgroundColors has at least one color. This is to ensure that the notes are not updated
+  // with an empty backgroundColors array.
+
   useEffect(() => {
     if (theme) {
       fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
@@ -41,27 +51,29 @@ export default function App() {
           console.log(backgroundColors);
         });
     }
-
-    setNotes((prevNotes) =>
-      prevNotes.map((note) => ({
-        ...note,
-        backgroundColor:
-          backgroundColors[Math.floor(Math.random() * backgroundColors.length)],
-      }))
-    );
-
-    console.log(theme, backgroundColors, "useEffect ran");
   }, [theme]);
+
+  useEffect(() => {
+    if (backgroundColors.length > 0) {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => ({
+          ...note,
+          backgroundColor:
+            backgroundColors[
+              Math.floor(Math.random() * backgroundColors.length)
+            ],
+        }))
+      );
+    }
+  }, [backgroundColors]);
 
   function switchTheme(clickedOptionHexVal) {
     setTheme(clickedOptionHexVal);
-    //console.log(theme, backgroundColors);
   }
 
-  // save notes to local storage:
-  // useEffect(() => {
-  //   localStorage.setItem("notes", JSON.stringify(notes));
-  // }, [notes]);
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   function addNote() {
     const randomColor =
