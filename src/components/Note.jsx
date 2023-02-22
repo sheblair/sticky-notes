@@ -21,20 +21,20 @@ export default function Note(props) {
       style={{ backgroundColor: props.note.backgroundColor }}
     >
       <input
-        className="note__title"
+        className="note-title"
         type="text"
         placeholder="Title"
         value={props.note.title}
         onChange={updateTitle}
       />
       <textarea
-        className="note__body"
+        className="note-body"
         placeholder="Body..."
         value={props.note.body}
         onChange={updateBody}
       />
       <FontAwesomeIcon
-        className="note__delete"
+        className="note-delete"
         icon={faTrashAlt}
         onClick={() => props.removeNote(props.note.id)}
       />

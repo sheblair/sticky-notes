@@ -7,8 +7,8 @@ export default function Header(props) {
   };
 
   return (
-    <header className="app-header__controls">
-      <h1 className="app-header__title">Sticky Notes</h1>
+    <header className="header-wrapper">
+      <h1 className="header-title">Sticky Notes</h1>
       <aside>
         <button onClick={props.addNote} className="add-new">
           + New Note

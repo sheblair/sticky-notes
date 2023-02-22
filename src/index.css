@@ -23,13 +23,13 @@ textarea {
   margin: 0;
 }
 
-.app-header__title {
+.header-title {
   margin: 10px 20px 0px;
   font-family: 'Arial', sans-serif;
   font-weight: 700;
 }
 
-.app-header__controls {
+.header-wrapper {
   display: flex;
   align-items: center;
   margin: 10px 0 0 10px;
@@ -70,8 +70,8 @@ textarea {
   position: relative;
 }
 
-.note__title,
-.note__body {
+.note-title,
+.note-body {
   width: 100%;
   padding: 8px 14px;
   background: transparent;
@@ -79,18 +79,18 @@ textarea {
   font-family: 'Helvetica', sans-serif;
 }
 
-.note__title {
+.note-title {
   font-size: 16px;
   font-weight: bold;
   border: none;
 }
 
-.note__body {
+.note-body {
   flex-grow: 1;
   font-size: 14px;
 }
 
-.note__delete {
+.note-delete {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -99,7 +99,7 @@ textarea {
   padding: 5px;
 }
 
-.note__delete:hover {
+.note-delete:hover {
   color: black;
   cursor: pointer;
 }
