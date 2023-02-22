@@ -22,25 +22,7 @@ export default function App() {
     },
   ]);
 
-  // HERE IS THE PROBLEM:
-  // when user clicks "pink", state is already initialized at null and thus there are no colors to use.
-  // state is reset to pink, but that happens after the notes are rendered. that somehow happens at the end
-  //
-  // then when user clicks green, state is set to pink and the notes re-render based on this color scheme
-  // the current theme held in state is misaligned with what the user is clicking. state is one step behind user,
-  // so to speak. why though??? and how do i fix ??? arghhh
-
-  // from ChatGPT:
-  // The issue seems to be that the state of backgroundColors is not immediately updated when the theme changes,
-  // and as a result, the notes may not render with the correct background color. One possible way to fix this is
-  // to use the useEffect hook to update the background colors when the theme changes, and also to update the notes
-  // with the new background colors.
-
-  // In this updated version, the first useEffect hook fetches the new colors when the theme changes, and the second
-  // useEffect hook updates the notes with the new background colors when the backgroundColors state changes. Note that
-  // we only update the notes when backgroundColors has at least one color. This is to ensure that the notes are not updated
-  // with an empty backgroundColors array.
-
+  // if there is a theme set in state, fetch hex values from colors API
   useEffect(() => {
     if (theme) {
       fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
@@ -48,11 +30,16 @@ export default function App() {
         .then((data) => {
           const hexValues = data.colors.map((color) => color.hex.value);
           setBackgroundColors(hexValues);
-          console.log(backgroundColors);
-        });
+        })
+        .catch((error) =>
+          console.log(
+            "Error fetching hex values from API. User will not be able to change color scheme."
+          )
+        );
     }
   }, [theme]);
 
+  // if we have hex values populating the backgroundColors array, map over notes and change colors
   useEffect(() => {
     if (backgroundColors.length > 0) {
       setNotes((prevNotes) =>
@@ -67,10 +54,12 @@ export default function App() {
     }
   }, [backgroundColors]);
 
+  // when user selects a theme option, set theme to that hex value
   function switchTheme(clickedOptionHexVal) {
     setTheme(clickedOptionHexVal);
   }
 
+  // save notes to local storage in the browser
   useEffect(() => {
     localStorage.setItem("notes", JSON.stringify(notes));
   }, [notes]);
@@ -86,7 +75,6 @@ export default function App() {
       doesMatchSearch: true,
       backgroundColor: theme ? randomColor : "lightyellow",
     };
-    console.log(newNote.backgroundColor);
     setNotes((prevNotes) => [newNote, ...prevNotes]);
   }
 
