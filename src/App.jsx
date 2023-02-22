@@ -7,17 +7,17 @@ export default function App() {
     JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState("");
   const [backgroundColors, setBackgroundColors] = useState([]);
   const [themeOptions, setThemeOptions] = useState([
     {
       id: "pink",
-      text: "pink",
+      text: "Strawberry Banana",
       hexValue: "ffe4e1",
     },
     {
       id: "green",
-      text: "green",
+      text: "Green Grove",
       hexValue: "fffacd",
     },
   ]);
@@ -39,9 +39,9 @@ export default function App() {
     }
   }, [theme]);
 
-  // if we have hex values populating the backgroundColors array, map over notes and change colors
+  // if we have hex values in the backgroundColors array, map over notes and change colors
   useEffect(() => {
-    if (backgroundColors.length > 0) {
+    if (backgroundColors.length) {
       setNotes((prevNotes) =>
         prevNotes.map((note) => ({
           ...note,

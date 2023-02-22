@@ -95,12 +95,12 @@ textarea {
   top: 5px;
   right: 5px;
   font-size: 15px;
-  color: lightgrey;
+  color: black;
   padding: 5px;
 }
 
 .note-delete:hover {
-  color: black;
+  color: lightgrey;
   cursor: pointer;
 }
 
