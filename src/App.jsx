@@ -27,9 +27,18 @@ export default function App() {
     },
   ]);
 
-  // if there is a theme set in state, fetch hex values from colors API
+  // to switch theme
   useEffect(() => {
-    if (theme) {
+    // if the user selects "default", all notes are light yellow
+    if (theme === "ffffe0") {
+      setNotes((prevNotes) =>
+        prevNotes.map((note) => ({
+          ...note,
+          backgroundColor: "lightyellow",
+        }))
+      );
+      // otherwise the background colors come from the colors API
+    } else if (theme) {
       fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
         .then((response) => response.json())
         .then((data) => {
