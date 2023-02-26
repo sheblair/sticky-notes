@@ -7,7 +7,9 @@ export default function App() {
     JSON.parse(localStorage.getItem("notes")) || []
   );
   const [searchText, setSearchText] = useState("");
-  const [theme, setTheme] = useState("");
+  const [theme, setTheme] = useState(
+    JSON.parse(localStorage.getItem("theme")) || ""
+  );
   const [backgroundColors, setBackgroundColors] = useState([]);
   const [themeOptions, setThemeOptions] = useState([
     {
@@ -71,6 +73,7 @@ export default function App() {
   // when user selects a theme option, set theme to that hex value
   function switchTheme(selectedOptionHexVal) {
     setTheme(selectedOptionHexVal);
+    localStorage.setItem("theme", JSON.stringify(theme));
     console.log(theme);
   }
 

@@ -17,13 +17,6 @@ textarea {
   resize: none;
 }
 
-.notes-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10px;
-  margin: 0;
-}
-
 .header-title {
   font-family: 'Arial', sans-serif;
   font-weight: 700;
@@ -64,9 +57,18 @@ textarea {
   margin: 10px 0 10px 20px;
 }
 
+.select-menu {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.notes-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
 .note {
-  width: 200px;
-  height: 200px;
   margin: 10px;
   background-color: lightyellow;
   border: 1px solid grey;

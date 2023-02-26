@@ -11,6 +11,7 @@ export default function OptionsList(props) {
       <select
         name="theme"
         id="theme"
+        className="select-menu"
         value={props.theme}
         onChange={(event) => props.switchTheme(event.target.value)}
       >
