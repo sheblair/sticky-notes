@@ -11,6 +11,11 @@ export default function App() {
   const [backgroundColors, setBackgroundColors] = useState([]);
   const [themeOptions, setThemeOptions] = useState([
     {
+      id: "default",
+      text: "Default",
+      hexValue: "ffffe0",
+    },
+    {
       id: "pink",
       text: "Strawberry Banana",
       hexValue: "ffe4e1",
@@ -55,8 +60,9 @@ export default function App() {
   }, [backgroundColors]);
 
   // when user selects a theme option, set theme to that hex value
-  function switchTheme(clickedOptionHexVal) {
-    setTheme(clickedOptionHexVal);
+  function switchTheme(selectedOptionHexVal) {
+    setTheme(selectedOptionHexVal);
+    console.log(theme);
   }
 
   // save notes to local storage in the browser

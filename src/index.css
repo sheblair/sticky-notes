@@ -8,6 +8,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Helvetica', sans-serif;
+  font-size: 16px;
 }
 
 input,
@@ -24,22 +25,24 @@ textarea {
 }
 
 .header-title {
-  margin: 10px 20px 0px;
   font-family: 'Arial', sans-serif;
   font-weight: 700;
+  font-size: 1.5rem;
+  margin: 20px 0 0 20px;
 }
 
 .header-wrapper {
   display: flex;
-  align-items: center;
-  margin: 10px 0 0 10px;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.search,
-.add-new {
-  font-size: 14px;
-  padding: 5px;
-  margin: 8px;
+.search-wrapper {
+  margin: 10px 0 0 20px;
+}
+
+.search, .add-new {
+  margin: 5px;
 }
 
 .search {
@@ -55,6 +58,10 @@ textarea {
   background-color: #f2eeee;
   outline: 1px solid black;
   border: none;
+}
+
+.select-theme-wrapper {
+  margin: 10px 0 10px 20px;
 }
 
 .note {

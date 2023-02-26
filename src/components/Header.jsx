@@ -9,7 +9,7 @@ export default function Header(props) {
   return (
     <header className="header-wrapper">
       <h1 className="header-title">Sticky Notes</h1>
-      <aside>
+      <aside className="search-wrapper">
         <button onClick={props.addNote} className="add-new">
           + New Note
         </button>
