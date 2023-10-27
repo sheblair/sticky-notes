@@ -1,40 +1,40 @@
 import React from "react";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Note(props) {
-  const updateTitle = (event) => {
-    const updatedValue = event.target.value;
-    const changedNoteId = props.note.id;
-    props.onType(changedNoteId, "title", updatedValue);
+export default function Note({ note, onType, removeNote }) {
+  const updateTitle = (e) => {
+    const updatedValue = e.target.value;
+    const changedNoteId = note.id;
+    onType(changedNoteId, "title", updatedValue);
   };
 
-  const updateBody = (event) => {
-    const updatedValue = event.target.value;
-    const changedNoteId = props.note.id;
-    props.onType(changedNoteId, "body", updatedValue);
+  const updateBody = (e) => {
+    const updatedValue = e.target.value;
+    const changedNoteId = note.id;
+    onType(changedNoteId, "body", updatedValue);
   };
 
   return (
-    <li
-      className="note"
-      style={{ backgroundColor: props.note.backgroundColor }}
-    >
+    <li className="note" style={{ backgroundColor: note.backgroundColor }}>
       <input
-        className="note__title"
+        className="note-title"
         type="text"
         placeholder="Title"
-        value={props.note.title}
+        value={note.title}
         onChange={updateTitle}
       />
       <textarea
-        className="note__body"
+        className="note-body"
         placeholder="Body..."
-        value={props.note.body}
+        value={note.body}
         onChange={updateBody}
       />
-      <i
-        className="fa-solid fa-trash-can note__delete"
-        onClick={() => props.removeNote(props.note.id)}
-      ></i>
+      <FontAwesomeIcon
+        className="note-delete"
+        icon={faTrashAlt}
+        onClick={() => removeNote(note.id)}
+      />
     </li>
   );
 }

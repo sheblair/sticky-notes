@@ -1,25 +1,36 @@
 import React from "react";
+import OptionsList from "./OptionsList";
 
-export default function Header(props) {
-  const callSearch = (event) => {
-    props.onSearch(event.target.value);
-  };
+export default function Header({
+  onSearch,
+  addNote,
+  searchText,
+  switchTheme,
+  themeOptions,
+  selectedThemeOption,
+}) {
+  const callSearch = (e) => onSearch(e.target.value);
 
   return (
-    <header className="app-header__controls">
-      <h1 className="app-header__title">Sticky Notes</h1>
-      <aside>
-        <button onClick={props.addNote} className="add-new">
+    <header className="header-wrapper">
+      <h1 className="header-title">Sticky Notes</h1>
+      <aside className="search-wrapper">
+        <button onClick={addNote} className="add-new">
           + New Note
         </button>
         <input
           className="search"
           type="text"
           placeholder="Type here to search..."
-          value={props.searchText}
+          value={searchText}
           onChange={callSearch}
         />
       </aside>
+      <OptionsList
+        switchTheme={switchTheme}
+        themeOptions={themeOptions}
+        selectedThemeOption={selectedThemeOption}
+      />
     </header>
   );
 }

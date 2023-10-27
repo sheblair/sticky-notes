@@ -1,13 +1,14 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Helvetica', sans-serif;
+  font-size: 16px;
 }
 
 input,
@@ -16,30 +17,25 @@ textarea {
   resize: none;
 }
 
-.notes-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 10px;
-  margin: 0;
-}
-
-.app-header__title {
-  margin: 10px 20px 0px;
+.header-title {
   font-family: 'Arial', sans-serif;
   font-weight: 700;
+  font-size: 1.5rem;
+  margin: 20px 0 0 20px;
 }
 
-.app-header__controls {
+.header-wrapper {
   display: flex;
-  align-items: center;
-  margin: 10px 0 0 10px;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.search,
-.add-new {
-  font-size: 14px;
-  padding: 5px;
-  margin: 8px;
+.search-wrapper {
+  margin: 10px 0 0 20px;
+}
+
+.search, .add-new {
+  margin: 5px;
 }
 
 .search {
@@ -57,21 +53,37 @@ textarea {
   border: none;
 }
 
+.select-theme-wrapper {
+  margin: 10px 0 10px 20px;
+}
+
+.select-menu {
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+.notes-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 0;
+}
+
 .note {
   width: 200px;
   height: 200px;
   margin: 10px;
-  background-color: lightyellow;
+  background-color: #ffffe0;
   border: 1px solid grey;
-  box-shadow: 2px 2px 3px lightgrey;
+  box-shadow: 2px 2px 3px #d3d3d3;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.note__title,
-.note__body {
+.note-title,
+.note-body {
   width: 100%;
   padding: 8px 14px;
   background: transparent;
@@ -79,18 +91,18 @@ textarea {
   font-family: 'Helvetica', sans-serif;
 }
 
-.note__title {
+.note-title {
   font-size: 16px;
   font-weight: bold;
   border: none;
 }
 
-.note__body {
+.note-body {
   flex-grow: 1;
   font-size: 14px;
 }
 
-.note__delete {
+.note-delete {
   position: absolute;
   top: 5px;
   right: 5px;
@@ -99,7 +111,7 @@ textarea {
   padding: 5px;
 }
 
-.note__delete:hover {
+.note-delete:hover {
   color: black;
   cursor: pointer;
 }
