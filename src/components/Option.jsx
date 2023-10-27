@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Option(props) {
-  return <option value={props.option.hexValue}>{props.option.text}</option>;
+export default function Option({ option }) {
+  return <option value={option.hexValue}>{option.name}</option>;
 }

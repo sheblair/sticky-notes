@@ -1,9 +1,13 @@
 import React from "react";
 import Option from "./Option";
 
-export default function OptionsList(props) {
+export default function OptionsList({
+  themeOptions,
+  selectedThemeOption,
+  switchTheme,
+}) {
   const renderOption = (option) => <Option key={option.id} option={option} />;
-  const optionsListElements = props.themeOptions.map(renderOption);
+  const optionsListElements = themeOptions.map(renderOption);
 
   return (
     <div className="select-theme-wrapper">
@@ -12,8 +16,8 @@ export default function OptionsList(props) {
         name="theme"
         id="theme"
         className="select-menu"
-        value={props.theme}
-        onChange={(event) => props.switchTheme(event.target.value)}
+        value={selectedThemeOption}
+        onChange={(e) => switchTheme(e.target.value)}
       >
         {optionsListElements}
       </select>

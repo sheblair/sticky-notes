@@ -3,31 +3,47 @@ import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 
 export default function App() {
+  // if there are notes in browser's local storage, initialize with those;
+  // otherwise, initialize with an empty array
   const [notes, setNotes] = useState(
-    JSON.parse(localStorage.getItem("notes")) || []
+    () => JSON.parse(localStorage.getItem("notes")) || []
   );
+
+  // initialize search text as an empty string
   const [searchText, setSearchText] = useState("");
+
+  // if there is a selected theme in browser's local storage, initalize with that;
+  // otherwise, initalize with default
   const [theme, setTheme] = useState(
-    JSON.parse(localStorage.getItem("theme")) || ""
+    JSON.parse(localStorage.getItem("theme")) || "ffffe0"
+  );
+  // Initialize the theme dropdown based on the theme in local storage
+  const [selectedThemeOption, setSelectedThemeOption] = useState(
+    JSON.parse(localStorage.getItem("theme")) || "default"
   );
   const [backgroundColors, setBackgroundColors] = useState([]);
-  const [themeOptions, setThemeOptions] = useState([
+  const themeOptions = [
     {
       id: "default",
-      text: "Default",
+      name: "Default",
       hexValue: "ffffe0",
     },
     {
       id: "pink",
-      text: "Strawberry Banana",
-      hexValue: "ffe4e1",
+      name: "Angel",
+      hexValue: "ffe6e9",
     },
     {
       id: "green",
-      text: "Green Grove",
+      name: "Garden",
       hexValue: "fffacd",
     },
-  ]);
+    {
+      id: "lavender",
+      name: "Stardust",
+      hexValue: "fde6ff",
+    },
+  ];
 
   // to switch theme
   useEffect(() => {
@@ -47,13 +63,18 @@ export default function App() {
           const hexValues = data.colors.map((color) => color.hex.value);
           setBackgroundColors(hexValues);
         })
-        .catch((error) =>
-          console.log(
-            "Error fetching hex values from API. User will not be able to change color scheme."
-          )
-        );
+        .catch((error) => console.log("Error fetching hex values from API"));
     }
   }, [theme]);
+
+  // when user selects a theme option, set theme to that hex value
+  function switchTheme(selectedHexVal) {
+    setTheme(selectedHexVal);
+    setSelectedThemeOption(selectedHexVal); // Update the selected theme option
+    localStorage.setItem("theme", JSON.stringify(selectedHexVal));
+    console.log("switchTheme ran");
+    console.log(theme);
+  }
 
   // if we have hex values in the backgroundColors array, map over notes and change colors
   useEffect(() => {
@@ -69,13 +90,6 @@ export default function App() {
       );
     }
   }, [backgroundColors]);
-
-  // when user selects a theme option, set theme to that hex value
-  function switchTheme(selectedOptionHexVal) {
-    setTheme(selectedOptionHexVal);
-    localStorage.setItem("theme", JSON.stringify(theme));
-    console.log(theme);
-  }
 
   // save notes to local storage in the browser
   useEffect(() => {
@@ -146,6 +160,7 @@ export default function App() {
         searchText={searchText}
         switchTheme={switchTheme}
         themeOptions={themeOptions}
+        selectedThemeOption={selectedThemeOption}
       />
       <NotesList notes={notes} onType={onType} removeNote={removeNote} />
     </div>

@@ -1,10 +1,10 @@
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: 'Helvetica', sans-serif;
@@ -63,16 +63,19 @@ textarea {
 }
 
 .notes-list {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin: 0;
 }
 
 .note {
+  width: 200px;
+  height: 200px;
   margin: 10px;
-  background-color: lightyellow;
+  background-color: #ffffe0;
   border: 1px solid grey;
-  box-shadow: 2px 2px 3px lightgrey;
+  box-shadow: 2px 2px 3px #d3d3d3;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
@@ -104,12 +107,12 @@ textarea {
   top: 5px;
   right: 5px;
   font-size: 15px;
-  color: black;
+  color: lightgrey;
   padding: 5px;
 }
 
 .note-delete:hover {
-  color: lightgrey;
+  color: black;
   cursor: pointer;
 }
 
