@@ -3,25 +3,21 @@ import Header from "./components/Header";
 import NotesList from "./components/NotesList";
 
 export default function App() {
-  // if there are notes in browser's local storage, initialize with those;
-  // otherwise, initialize with an empty array
   const [notes, setNotes] = useState(
     () => JSON.parse(localStorage.getItem("notes")) || []
   );
-
-  // initialize search text as an empty string
-  const [searchText, setSearchText] = useState("");
-
-  // if there is a selected theme in browser's local storage, initalize with that;
-  // otherwise, initalize with default
   const [theme, setTheme] = useState(
-    JSON.parse(localStorage.getItem("theme")) || "ffffe0"
+    JSON.parse(localStorage.getItem("theme")) || ""
   );
-  // Initialize the theme dropdown based on the theme in local storage
+
   const [selectedThemeOption, setSelectedThemeOption] = useState(
     JSON.parse(localStorage.getItem("theme")) || "default"
   );
+
   const [backgroundColors, setBackgroundColors] = useState([]);
+  const [themeChanged, setThemeChanged] = useState(false);
+  const [searchText, setSearchText] = useState("");
+
   const themeOptions = [
     {
       id: "default",
@@ -45,17 +41,14 @@ export default function App() {
     },
   ];
 
-  // to switch theme
   useEffect(() => {
-    // if the user selects "default", all notes are light yellow
-    if (theme === "ffffe0") {
+    if (selectedThemeOption === "default") {
       setNotes((prevNotes) =>
         prevNotes.map((note) => ({
           ...note,
-          backgroundColor: "lightyellow",
+          backgroundColor: "ffffe0",
         }))
       );
-      // otherwise the background colors come from the colors API
     } else if (theme) {
       fetch(`https://www.thecolorapi.com/scheme?hex=${theme}&mode=analogic`)
         .then((response) => response.json())
@@ -63,22 +56,31 @@ export default function App() {
           const hexValues = data.colors.map((color) => color.hex.value);
           setBackgroundColors(hexValues);
         })
-        .catch((error) => console.log("Error fetching hex values from API"));
+        .catch((error) =>
+          console.log("Error fetching hex values from API", error)
+        );
     }
-  }, [theme]);
+  }, [theme, themeChanged]);
 
   // when user selects a theme option, set theme to that hex value
   function switchTheme(selectedHexVal) {
+    if (theme !== selectedHexVal) {
+      setThemeChanged(true);
+    } else if (selectedHexVal === "default") {
+      setThemeChanged(false);
+    }
     setTheme(selectedHexVal);
     setSelectedThemeOption(selectedHexVal); // Update the selected theme option
     localStorage.setItem("theme", JSON.stringify(selectedHexVal));
-    console.log("switchTheme ran");
+
     console.log(theme);
+    console.log(selectedHexVal);
+    console.log("switchTheme ran");
   }
 
   // if we have hex values in the backgroundColors array, map over notes and change colors
   useEffect(() => {
-    if (backgroundColors.length) {
+    if (themeChanged && backgroundColors.length) {
       setNotes((prevNotes) =>
         prevNotes.map((note) => ({
           ...note,
@@ -89,7 +91,7 @@ export default function App() {
         }))
       );
     }
-  }, [backgroundColors]);
+  }, [backgroundColors, themeChanged, theme]);
 
   // save notes to local storage in the browser
   useEffect(() => {
@@ -105,7 +107,7 @@ export default function App() {
       title: "",
       body: "",
       doesMatchSearch: true,
-      backgroundColor: theme ? randomColor : "lightyellow",
+      backgroundColor: theme ? randomColor : "ffffe0",
     };
     setNotes((prevNotes) => [newNote, ...prevNotes]);
   }
