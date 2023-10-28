@@ -14,23 +14,29 @@ export default function Header({
   return (
     <header className="header-wrapper">
       <h1 className="header-title">Sticky Notes</h1>
+      <OptionsList
+        switchTheme={switchTheme}
+        themeOptions={themeOptions}
+        selectedThemeOption={selectedThemeOption}
+      />
       <aside className="search-wrapper">
-        <button onClick={addNote} className="add-new">
+        <button
+          onClick={addNote}
+          className="add-new"
+          style={{ backgroundColor: "#eee" }}
+        >
           + New Note
         </button>
+        <label htmlFor="search"></label>
         <input
           className="search"
+          id="search"
           type="text"
           placeholder="Type here to search..."
           value={searchText}
           onChange={callSearch}
         />
       </aside>
-      <OptionsList
-        switchTheme={switchTheme}
-        themeOptions={themeOptions}
-        selectedThemeOption={selectedThemeOption}
-      />
     </header>
   );
 }

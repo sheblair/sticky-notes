@@ -33,22 +33,22 @@ export default function App() {
   const themeOptions = [
     {
       id: "default",
-      name: "Default",
+      name: "default",
       value: "rgb(255, 255, 224)",
     },
     {
       id: "pink",
-      name: "Angel",
+      name: "angel",
       value: "ffe6e9",
     },
     {
       id: "green",
-      name: "Garden",
+      name: "garden",
       value: "fffacd",
     },
     {
       id: "lavender",
-      name: "Stardust",
+      name: "stardust",
       value: "fde6ff",
     },
   ];

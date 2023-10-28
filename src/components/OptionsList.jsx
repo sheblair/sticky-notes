@@ -11,7 +11,7 @@ export default function OptionsList({
 
   return (
     <div className="select-theme-wrapper">
-      <label htmlFor="theme">Choose a theme:</label>
+      <label htmlFor="theme">theme: </label>
       <select
         name="theme"
         id="theme"
