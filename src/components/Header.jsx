@@ -1,6 +1,6 @@
 import React from "react";
 import OptionsList from "./OptionsList";
-import Tooltip from "./ToolTip";
+import ToolTip from "./ToolTip";
 
 export default function Header({
   onSearch,
