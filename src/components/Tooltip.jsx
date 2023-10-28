@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Tooltip({ handleMouseEnter, handleMouseLeave }) {
+export default function ToolTip({ handleMouseEnter, handleMouseLeave }) {
   return (
     <aside className="tooltip-container">
       <span

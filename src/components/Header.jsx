@@ -23,7 +23,7 @@ export default function Header({
           themeOptions={themeOptions}
           selectedThemeOption={selectedThemeOption}
         />
-        <Tooltip
+        <ToolTip
           handleMouseEnter={handleMouseEnter}
           handleMouseLeave={handleMouseLeave}
         />
