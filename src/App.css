@@ -151,4 +151,9 @@ input.search::placeholder {
     justify-content: flex-start;
     margin: 0 20px;
   }
+
+  .note {
+    width: 300px;
+    height: 300px;
+  }
 }
