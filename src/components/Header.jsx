@@ -1,5 +1,6 @@
 import React from "react";
 import OptionsList from "./OptionsList";
+import Tooltip from "./ToolTip";
 
 export default function Header({
   onSearch,
@@ -8,17 +9,25 @@ export default function Header({
   switchTheme,
   themeOptions,
   selectedThemeOption,
+  handleMouseEnter,
+  handleMouseLeave,
 }) {
   const callSearch = (e) => onSearch(e.target.value);
 
   return (
     <header className="header-wrapper">
       <h1 className="header-title">Sticky Notes</h1>
-      <OptionsList
-        switchTheme={switchTheme}
-        themeOptions={themeOptions}
-        selectedThemeOption={selectedThemeOption}
-      />
+      <div className="theme-info-wrapper">
+        <OptionsList
+          switchTheme={switchTheme}
+          themeOptions={themeOptions}
+          selectedThemeOption={selectedThemeOption}
+        />
+        <Tooltip
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
+        />
+      </div>
       <aside className="search-wrapper">
         <button
           onClick={addNote}

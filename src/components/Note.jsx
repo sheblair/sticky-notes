@@ -34,6 +34,7 @@ export default function Note({ note, onType, removeNote }) {
         className="note-delete"
         icon={faTrashAlt}
         onClick={() => removeNote(note.id)}
+        style={{ backgroundColor: note.backgroundColor }}
       />
     </li>
   );

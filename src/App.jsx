@@ -27,6 +27,9 @@ export default function App() {
   // initialize searchText as empty string
   const [searchText, setSearchText] = useState("");
 
+  // initialize the tooltip as not visible
+  const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
   // define array of objects to determine theme options
   // for reasons unknown to me, the default theme has to have a rgb value
   // it doesn't get converted like the other values do. this is a mystery i have yet to solve
@@ -52,6 +55,14 @@ export default function App() {
       value: "fde6ff",
     },
   ];
+
+  // functions to handle state for the tooltip
+  function handleMouseEnter() {
+    setIsTooltipVisible(true);
+  }
+  function handleMouseLeave() {
+    setIsTooltipVisible(false);
+  }
 
   // gets called when user selects from theme dropdown menu
   function switchTheme(selectedValue) {
@@ -208,6 +219,9 @@ export default function App() {
         switchTheme={switchTheme}
         themeOptions={themeOptions}
         selectedThemeOption={selectedThemeOption}
+        isTooltipVisible={isTooltipVisible}
+        handleMouseEnter={handleMouseEnter}
+        handleMouseLeave={handleMouseLeave}
       />
       <NotesList notes={notes} onType={onType} removeNote={removeNote} />
     </div>
